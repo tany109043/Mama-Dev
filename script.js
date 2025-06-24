@@ -50,7 +50,7 @@
     if (moved) return;
     moved = false;
     if (!location.hostname.includes('udemy.com')) {
-      alert('⚠️ Use this on a Udemy course page only.');
+      alert('⚠️ Use this on a Udemy course page onlyyyyy.');
       return;
     }
 
