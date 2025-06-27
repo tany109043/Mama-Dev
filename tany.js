@@ -394,7 +394,7 @@
                 modulesArea.appendChild(memeBtn);
 
                 memeBtn.onclick = async () => {
-                    if (tokenPoints >= 0) {
+                    if (tokenPoints <= 0) {
                         alert('❌ Not enough meme tokens! Earn more by quizzes or the daily question.');
                         return;
                     }
