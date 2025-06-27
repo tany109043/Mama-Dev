@@ -386,7 +386,7 @@
                 };
 
                
-
+                const topic = document.querySelector("h1").textContent.trim();
                 const memeBtn = document.createElement("button");
                 memeBtn.id = "udemyMemeBtn";
                 memeBtn.textContent = "🎭 Show Me a Meme";
@@ -394,12 +394,11 @@
                 modulesArea.appendChild(memeBtn);
 
                 memeBtn.onclick = async () => {
-                    if (tokenPoints <= 0) {
+                    if (tokenPoints >= 0) {
                         alert('❌ Not enough meme tokens! Earn more by quizzes or the daily question.');
                         return;
                     }
 
-                    const topic = document.querySelector("h1").textContent.trim();
                     const templateEmotions = {
   "181913649": "before_after",
   "93895088": "before_after",
@@ -425,7 +424,7 @@ const getTemplateByCategory = (category) => {
   return randomEntry[0]; // template ID
 };
 
-const topic = document.querySelector("h1").textContent.trim();
+
 const prompt = `
 You're a meme generator. Give me two lines that are related to each other in a funny way so I could make a meme out of them.
 There should be a clear relationship between the two lines.
