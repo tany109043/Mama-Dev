@@ -299,49 +299,26 @@
      *  🛠️ COHERE HELPER
      *************************************************/
     const apiKey = 'KOFCOr5gKM1Se1Rxe12VzbLw1yW3JP0SdjAhZMXx';
-const endpoint = 'https://api.cohere.ai/v1/generate';
+const endpoint = 'https://api.cohere.ai/v1/generate'; // still works for command-r
 
 const cohereQuery = async (prompt, max = 400, temp = 0.7) => {
-  try {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'command-r-plus',
-        prompt,
-        max_tokens: max,
-        temperature: temp
-      }),
-    });
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'command-r',   // 🔄 switch from 'command-r-plus'
+      prompt,
+      max_tokens: max,
+      temperature: temp
+    })
+  });
 
-    // Check for non-2xx status
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error(`Cohere API error — status ${res.status}:`, errText);
-      throw new Error(`Cohere API returned ${res.status}`);
-    }
-
-    const data = await res.json();
-    console.log("Cohere response data:", data);
-
-    if (data.generations && data.generations[0] && typeof data.generations[0].text === 'string') {
-      return data.generations[0].text;
-    }
-
-    // If no generation present, fallback to error message or generic fallback
-    if (data.message) {
-      console.warn("Cohere API returned message:", data.message);
-      return `⚠️ ${data.message}`;
-    }
-
-    return '⚠️ No response - unexpected data format';
-  } catch (err) {
-    console.error("cohereQuery threw error:", err);
-    return `⚠️ Error: ${err.message}`;
-  }
+  const data = await res.json();
+  console.log("Cohere response:", data);
+  return data.generations?.[0]?.text || data.message || '⚠️ No response';
 };
 
 
